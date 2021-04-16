@@ -1,75 +1,10 @@
 // import logo from './logo.svg';
 import React from 'react';
+import Task from './components/Task/Task'
 import './App.css';
-
-class CreateTask extends React.Component {  
-  constructor(props) {
-    super(props);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    // console.log(e.target[0].value);
-    this.props.submitTask(e);
-  }
-  render() {    
-    // console.log(`rendering Createtask InputValue: ${this.props}`)
-    return(
-      <form onSubmit={this.onSubmit}>
-        <input 
-          type="text" 
-          placeholder="Type to create a new task..."
-          value={this.props.inputValue}          
-          onChange={this.props.InputValueChange}>
-            
-        </input>
-        <input
-          className="submit-button"
-          type="submit" 
-          value="Create"
-          >
-        </input>
-
-      </form>
-    );
-  }
-}
+import TaskHeader from './components/TaskHeader/Taskheader';
 
 
-function ShowTask(props) {
-   const task = props.task;
-   return (
-      <div className="Task">
-        {task.name}
-        <RemoveTask
-          onRemove={() => props.onRemove(task.id)}/>
-        <EditTask/>
-        <HighlightTask/>
-      </div>
-  
-    );
-  
-}
-
-function RemoveTask(props) {
-  return(
-    <button
-      onClick={props.onRemove}>Remove</button>
-  )
-}
-
-function EditTask() {
-  return(
-    <button>Edit</button>
-  )
-}
-
-function HighlightTask() {
-  return(
-    <button>Highlight</button>
-  )
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -118,14 +53,14 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <CreateTask 
+        <TaskHeader 
             submitTask={this.submitNewTask}
             InputValueChange={this.inputChange}
             inputValue={this.state.newTask}
             />
           {this.state.tasks.map((task) => {
             return (
-              <ShowTask 
+              <Task 
                 key={task.id} 
                 task={task} 
                 onRemove={this.removeTask}/>
@@ -133,6 +68,7 @@ class App extends React.Component {
           })}
           
         </header>
+        
       </div>
     );
     };
